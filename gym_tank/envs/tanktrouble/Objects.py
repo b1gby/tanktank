@@ -5,7 +5,9 @@ import pygame.locals as GAME_GLOBALS
 import pygame.time as GAME_TIME
 import random
 import time
+import os
 
+mypath = os.path.dirname(os.path.realpath(__file__))
 
 def findDots(n, start, end):
     n -= 1
@@ -129,7 +131,7 @@ def checkPixelsRotate(surface, start, angle, rotateSpeed, direction):
 
 class world:
     def loadMaps(self):
-        self.maps.append(pygame.image.load('Maps/Map3.png'))
+        self.maps.append(pygame.image.load(os.path.join(mypath, 'Maps/Map3.png')))
 
     def chooseMap(self):
         self.Map = self.maps[random.randrange(len(self.maps))]
@@ -149,6 +151,69 @@ class tank:
     def loadPicture(self, Imagedirectory):
         self.picture = pygame.image.load(Imagedirectory)
 
+    # rotate left
+    def rotate_left(self, surface):
+        collision = False
+        while self.collision(surface) == 'leftFrontCollision':
+            collision = True
+            self.leftRotate = False
+            self.backwardDirection = True
+            self.move(surface)
+            time.sleep(.01)
+        else:
+            if collision:
+                collision = False
+                self.backwardDirection = False
+                self.leftRotate = True
+        while self.collision(surface) == 'rightRearCollision':
+            collision = True
+            self.leftRotate = False
+            self.forwardDirection = True
+            self.move(surface)
+            time.sleep(.01)
+        else:
+            if collision:
+                collision = False
+                self.forwardDirection = False
+                self.leftRotate = True
+        if not collision:
+            self.angle += self.rotateSpeed
+        if self.angle >= 360:
+            self.angle = self.angle - (360 * int(self.angle / 360))
+        self.rouPicture = pygame.transform.rotate(self.picture, self.angle)
+
+    # rotate right
+    def rotate_right(self, surface):
+        collision = False
+        while self.collision(surface) == 'rightFrontCollision':
+            collision = True
+            self.rightRotate = False
+            self.backwardDirection = True
+            self.move(surface)
+            time.sleep(.01)
+        else:
+            if collision:
+                collision = False
+                self.backwardDirection = False
+                self.rightRotate = True
+        while self.collision(surface) == 'leftRearCollision':
+            collision = True
+            self.rightRotate = False
+            self.forwardDirection = True
+            self.move(surface)
+            time.sleep(.01)
+        else:
+            if collision:
+                collision = False
+                self.forwardDirection = False
+                self.rightRotate = True
+        if not collision:
+            self.angle -= self.rotateSpeed
+        if self.angle <= -360:
+            self.angle = self.angle + (360 * int(self.angle / -360))
+        self.rouPicture = pygame.transform.rotate(self.picture, self.angle)
+
+    # rotate
     def rotate(self, surface):
         collision = False
         if self.leftRotate:
@@ -208,6 +273,8 @@ class tank:
         # self.move(surface)
         self.rouPicture = pygame.transform.rotate(self.picture, self.angle)
 
+
+
     def drawTank(self, surface):
         if not self.isWracked:
             self.pictureAngle = self.angle
@@ -226,6 +293,82 @@ class tank:
                              self.x - xyDifference / 2,
                              self.y - xyDifference / 2))
 
+
+    # move forward
+    def move_forward(self, surface):
+        collision = False
+        while self.collision(surface) == 'frontLeftCollision':
+            if self.angle != 0 and self.angle != 90 and self.angle != 180 and self.angle != 270 and self.angle != -90 and self.angle != -180 and self.angle != -270:
+                collision = True
+                self.forwardDirection = False
+                self.rightRotate = True
+                self.rotate(surface)
+                time.sleep(.01)
+            else:
+                self.forwardDirection = False
+        else:
+            if collision:
+                collision = False
+                self.rightRotate = False
+                self.forwardDirection = True
+        while self.collision(surface) == 'frontRightCollision':
+            if self.angle != 0 and self.angle != 90 and self.angle != 180 and self.angle != 270 and self.angle != -90 and self.angle != -180 and self.angle != -270:
+                collision = True
+                self.forwardDirection = False
+                self.leftRotate = True
+                self.rotate(surface)
+                time.sleep(.01)
+            else:
+                self.forwardDirection = False
+        else:
+            if collision:
+                collision = False
+                self.leftRotate = False
+                self.forwardDirection = True
+        if not self.collision(surface):
+            self.vx = self.v * math.cos((-self.angle * math.pi) / 180)
+            self.vy = self.v * math.sin((-self.angle * math.pi) / 180)
+            self.x += self.vx
+            self.y += self.vy
+
+    # move backward
+    def move_backward(self, surface):
+        collision = False
+        while self.collision(surface) == 'rearLeftCollision':
+            if self.angle != 0 and self.angle != 90 and self.angle != 180 and self.angle != 270 and self.angle != -90 and self.angle != -180 and self.angle != -270:
+                collision = True
+                self.backwardDirection = False
+                self.leftRotate = True
+                self.rotate(surface)
+                time.sleep(.01)
+            else:
+                self.backwardDirection = False
+        else:
+            if collision:
+                collision = False
+                self.leftRotate = False
+                self.backwardDirection = True
+        while self.collision(surface) == 'rearRightCollision':
+            if self.angle != 0 and self.angle != 90 and self.angle != 180 and self.angle != 270 and self.angle != -90 and self.angle != -180 and self.angle != -270:
+                collision = True
+                self.backwardDirection = False
+                self.rightRotate = True
+                self.rotate(surface)
+                time.sleep(.01)
+            else:
+                self.backwardDirection = False
+        else:
+            if collision:
+                collision = False
+                self.rightRotate = False
+                self.backwardDirection = True
+        if not self.collision(surface):
+            self.vx = self.v * math.cos((-self.angle * math.pi) / 180)
+            self.vy = self.v * math.sin((-self.angle * math.pi) / 180)
+            self.x -= self.vx
+            self.y -= self.vy
+
+    # move
     def move(self, surface):
         if self.forwardDirection:
             collision = False
