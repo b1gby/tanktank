@@ -74,24 +74,24 @@ def startedgame():
                 if event.key == pygame.K_RIGHT:
                     greenTank.leftRotate = False
                     greenTank.rightRotate = True
-                if event.key == pygame.K_RCTRL:
+                if event.key == pygame.K_RSHIFT:
                     greenTank.fire()
                 # purpleTank
 
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_e:
+                if event.key == pygame.K_w:
                     purpleTank.forwardDirection = True
                     purpleTank.backwardDirection = False
-                if event.key == pygame.K_d:
+                if event.key == pygame.K_s:
                     purpleTank.forwardDirection = False
                     purpleTank.backwardDirection = True
-                if event.key == pygame.K_s:
+                if event.key == pygame.K_a:
                     purpleTank.leftRotate = True
                     purpleTank.rightRotate = False
-                if event.key == pygame.K_f:
+                if event.key == pygame.K_d:
                     purpleTank.leftRotate = False
                     purpleTank.rightRotate = True
-                if event.key == pygame.K_a:
+                if event.key == pygame.K_SPACE:
                     purpleTank.fire()
                 if event.key == pygame.K_ESCAPE:
                     pausemenu()
@@ -107,13 +107,13 @@ def startedgame():
                 if event.key == pygame.K_RIGHT:
                     greenTank.rightRotate = False
                 # purpleTank
-                if event.key == pygame.K_e:
+                if event.key == pygame.K_w:
                     purpleTank.forwardDirection = False
-                if event.key == pygame.K_d:
-                    purpleTank.backwardDirection = False
                 if event.key == pygame.K_s:
+                    purpleTank.backwardDirection = False
+                if event.key == pygame.K_a:
                     purpleTank.leftRotate = False
-                if event.key == pygame.K_f:
+                if event.key == pygame.K_d:
                     purpleTank.rightRotate = False
                 if event.type == GAME_GLOBALS.QUIT:
                     quitGame()

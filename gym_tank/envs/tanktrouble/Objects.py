@@ -386,11 +386,11 @@ class tank:
         self.loadPicture(Imagedirectory)
         self.height = 50
         self.width = 75
-        self.pictureHeight = 75
+        self.pictureHeight = 50
         self.pictureWidth = 75
         self.angle = random.randrange(360)
-        self.rotateSpeed = 3
-        self.v = 5
+        self.rotateSpeed = 2
+        self.v = 3
         self.vx = self.v * math.cos((-self.angle * math.pi) / 180)
         self.vy = self.v * math.sin((-self.angle * math.pi) / 180)
         self.forwardDirection = False
@@ -410,8 +410,8 @@ class bullet:
         self.x = tank.x + tank.width * math.cos((tank.angle * math.pi) / 180) / 2
         self.y = tank.y + tank.width * math.sin((-tank.angle * math.pi) / 180) / 2
         self.angle = tank.angle
-        self.radius = 5
-        self.v = 3.5
+        self.radius = 3
+        self.v = 4.5
         self.vx = self.v * math.cos((self.angle * math.pi) / 180)
         self.vy = self.v * math.sin((self.angle * math.pi) / 180)
         tank.bullets.append(self)
