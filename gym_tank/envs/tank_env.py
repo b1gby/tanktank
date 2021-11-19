@@ -64,8 +64,18 @@ class TankEnv(gym.Env):
         self.screen.fill((255, 255, 255))
 
         self.world.drawMap(self.screen)
-        self.greenTank.drawTank(self.screen)
-        self.purpleTank.drawTank(self.screen)
+        if self.greenTank.isWracked or self.purpleTank.isWracked:
+            positions = [(93, 50), (1273, 670), (93, 450), (1273, 270), (493, 450), (973, 160), (343, 200), (973, 500)]
+            greenTankPosition = positions.pop(random.randrange(len(positions)))
+            purpleTankPosition = positions.pop(random.randrange(len(positions)))
+            self.greenTank.restart(greenTankPosition[0], greenTankPosition[1])
+            self.purpleTank.restart(purpleTankPosition[0], purpleTankPosition[1])
+            self.greenTank.rotate(self.screen)
+            self.purpleTank.rotate(self.screen)
+
+        else:
+            self.greenTank.drawTank(self.screen)
+            self.purpleTank.drawTank(self.screen)
 
         # bullets
         for bullet in self.purpleTank.bullets:
@@ -129,19 +139,18 @@ class TankEnv(gym.Env):
         elif action == 1:
             # forward
             self.greenTank.move_forward(self.screen)
-            self.greenTank.drawTank(self.screen)
         elif action == 2:
             # backward
             self.greenTank.move_backward(self.screen)
-            self.greenTank.drawTank(self.screen)
         elif action == 3:
             # rotate left
             self.greenTank.rotate_left(self.screen)
-            self.greenTank.drawTank(self.screen)
         elif action == 4:
             # rotate right
             self.greenTank.rotate_right(self.screen)
-            self.greenTank.drawTank(self.screen)
+
+        self.greenTank.drawTank(self.screen)
+        self.purpleTank.drawTank(self.screen)
         
 
         
@@ -152,14 +161,17 @@ class TankEnv(gym.Env):
         observation = self.get_state()
 
         # reward
+        # 胜利奖励大
         if self.purpleTank.isWracked:
             done = True
             reward = 50.0
             self.reset()
+        # 自己摧毁惩罚要大
         elif self.greenTank.isWracked:
             done = True
             reward = -1.0
             self.reset()
+        # 正常状态 惩罚要小
         else:
             done = False
             reward = -1.0
@@ -191,7 +203,7 @@ class TankEnv(gym.Env):
         running = True
 
         while running:
-            pygame.time.delay(50)
+            # pygame.time.delay(50)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -218,7 +230,8 @@ class TankEnv(gym.Env):
                         self.action = 3
                     elif self.keys[pygame.K_d]:
                         self.action = 4
-
+                    else:
+                        self.action = -1
                     if self.action != -1:
                         observation, reward, done, _ = self.step(
                             self.action)
@@ -227,7 +240,7 @@ class TankEnv(gym.Env):
                     if not (self.keys[pygame.K_LEFT] and self.keys[pygame.K_RIGHT] and self.keys[pygame.K_UP] and self.keys[pygame.K_DOWN]):
                         self.play_on = True
 
-                self.redraw()
+            self.redraw()
 
 
 if __name__ == "__main__":
