@@ -16,6 +16,7 @@ from gym.utils import seeding
 from gym.spaces import Discrete, Box
 from gym.envs.classic_control import rendering
 
+
 class TankEnv(gym.Env):
     metadata = {'render.modes': ['human', 'rgb_array']}
 
@@ -38,8 +39,10 @@ class TankEnv(gym.Env):
         self.greenTankPosition = self.positions.pop(random.randrange(len(self.positions)))
         self.purpleTankPosition = self.positions.pop(random.randrange(len(self.positions)))
 
-        self.greenTank = Objects.tank(self.greenTankPosition[0], self.greenTankPosition[1], 'tanktrouble/Tanks/greenTank3.png', self.screen)
-        self.purpleTank = Objects.tank(self.purpleTankPosition[0], self.purpleTankPosition[1], 'tanktrouble/Tanks/purpleTank.png', self.screen)
+        self.greenTank = Objects.tank(self.greenTankPosition[0], self.greenTankPosition[1], 'Tanks/greenTank3.png',
+                                      self.screen)
+        self.purpleTank = Objects.tank(self.purpleTankPosition[0], self.purpleTankPosition[1], 'Tanks/purpleTank.png',
+                                       self.screen)
 
         # state
         self.initial_obs = self.get_state()
@@ -58,7 +61,6 @@ class TankEnv(gym.Env):
         self.n_step = 0
         self.max_steps = 200
         self.viewer = None
-
 
     def redraw(self):
         self.screen.fill((255, 255, 255))
@@ -80,7 +82,7 @@ class TankEnv(gym.Env):
         # bullets
         for bullet in self.purpleTank.bullets:
             collisionKind = bullet.collision(self.screen)
-            
+
             if collisionKind == "GREEN TANK COLLISION":
                 self.greenTank.isWracked = True
                 self.greenTank.wrackTime = GAME_TIME.get_ticks()
@@ -108,10 +110,8 @@ class TankEnv(gym.Env):
 
         pygame.display.update()
 
-
     def state(self):
         canvas = np.zeros((self.screen_width, self.screen_height, 3))
-
 
     def reset(self):
         self.action = -1
@@ -122,7 +122,6 @@ class TankEnv(gym.Env):
         observation = self.get_state()
 
         return observation
-    
 
     def step(self, action):
 
@@ -151,10 +150,7 @@ class TankEnv(gym.Env):
 
         self.greenTank.drawTank(self.screen)
         self.purpleTank.drawTank(self.screen)
-        
 
-        
-        
         pygame.display.update()
 
         info = {}
@@ -175,21 +171,18 @@ class TankEnv(gym.Env):
         else:
             done = False
             reward = -1.0
-        
+
         return observation, reward, done, info
-    
 
     def sample_action(self):
         return np.random.choice(self.discrete_actions)
 
-
     def get_state(self):
-        state = np.fliplr(np.flip(np.rot90(pygame.surfarray.array3d(
-            pygame.display.get_surface()).astype(np.uint8))))
+        state = np.flip(np.rot90(pygame.surfarray.array3d(
+            pygame.display.get_surface()).astype(np.uint8)), axis=0).copy()
         return state
 
-
-    def render(self, mode='human', close=False):
+    def render(self, mode='rgb_array', close=False):
         img = self.get_state()
         if mode == 'human':
             if self.viewer is None:
@@ -198,7 +191,6 @@ class TankEnv(gym.Env):
         elif mode == 'rgb_array':
             return img
 
-    
     def play(self):
         running = True
 
@@ -237,7 +229,8 @@ class TankEnv(gym.Env):
                             self.action)
 
                 elif event.type == pygame.KEYUP:
-                    if not (self.keys[pygame.K_LEFT] and self.keys[pygame.K_RIGHT] and self.keys[pygame.K_UP] and self.keys[pygame.K_DOWN]):
+                    if not (self.keys[pygame.K_LEFT] and self.keys[pygame.K_RIGHT] and self.keys[pygame.K_UP] and
+                            self.keys[pygame.K_DOWN]):
                         self.play_on = True
 
             self.redraw()

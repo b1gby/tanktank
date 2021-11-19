@@ -149,7 +149,7 @@ class world:
 class tank:
 
     def loadPicture(self, Imagedirectory):
-        self.picture = pygame.image.load(Imagedirectory)
+        self.picture = pygame.image.load(os.path.join(mypath, Imagedirectory))
 
     # rotate left
     def rotate_left(self, surface):
