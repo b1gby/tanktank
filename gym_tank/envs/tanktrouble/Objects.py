@@ -586,24 +586,27 @@ class bullet:
         self.y += self.vy
 
     def collision(self, surface):
-        if surface.get_at((int(self.x + self.radius), int(self.y))) == (101, 101, 101, 255):
-            self.angle = 180 - self.angle
-        elif surface.get_at((int(self.x - self.radius), int(self.y))) == (101, 101, 101, 255):
-            self.angle = 180 - self.angle
-        elif surface.get_at((int(self.x), int(self.y + self.radius))) == (101, 101, 101, 255):
-            self.angle = - self.angle
-        elif surface.get_at((int(self.x), int(self.y - self.radius))) == (101, 101, 101, 255):
-            self.angle = - self.angle
-            return "WALL COLLISION"
-        if surface.get_at((int(self.x + self.radius), int(self.y))) == (100, 0, 100, 255) or surface.get_at(
-                (int(self.x - self.radius), int(self.y))) == (100, 0, 100, 255) or surface.get_at(
-            (int(self.x), int(self.y + self.radius))) == (100, 0, 100, 255) or surface.get_at(
-            (int(self.x), int(self.y - self.radius))) == (100, 0, 100, 255):
-            if GAME_TIME.get_ticks() - self.startTime > 100:
-                return "PURPLE TANK COLLISION"
-        if surface.get_at((int(self.x + self.radius), int(self.y))) == (0, 100, 0, 255) or surface.get_at(
-                (int(self.x - self.radius), int(self.y))) == (0, 100, 0, 255) or surface.get_at(
-            (int(self.x), int(self.y + self.radius))) == (0, 100, 0, 255) or surface.get_at(
-            (int(self.x), int(self.y - self.radius))) == (0, 100, 0, 255):
-            if GAME_TIME.get_ticks() - self.startTime > 100:
-                return "GREEN TANK COLLISION"
+        try:
+            if surface.get_at((int(self.x + self.radius), int(self.y))) == (101, 101, 101, 255):
+                self.angle = 180 - self.angle
+            elif surface.get_at((int(self.x - self.radius), int(self.y))) == (101, 101, 101, 255):
+                self.angle = 180 - self.angle
+            elif surface.get_at((int(self.x), int(self.y + self.radius))) == (101, 101, 101, 255):
+                self.angle = - self.angle
+            elif surface.get_at((int(self.x), int(self.y - self.radius))) == (101, 101, 101, 255):
+                self.angle = - self.angle
+                return "WALL COLLISION"
+            if surface.get_at((int(self.x + self.radius), int(self.y))) == (100, 0, 100, 255) or surface.get_at(
+                    (int(self.x - self.radius), int(self.y))) == (100, 0, 100, 255) or surface.get_at(
+                (int(self.x), int(self.y + self.radius))) == (100, 0, 100, 255) or surface.get_at(
+                (int(self.x), int(self.y - self.radius))) == (100, 0, 100, 255):
+                if GAME_TIME.get_ticks() - self.startTime > 100:
+                    return "PURPLE TANK COLLISION"
+            if surface.get_at((int(self.x + self.radius), int(self.y))) == (0, 100, 0, 255) or surface.get_at(
+                    (int(self.x - self.radius), int(self.y))) == (0, 100, 0, 255) or surface.get_at(
+                (int(self.x), int(self.y + self.radius))) == (0, 100, 0, 255) or surface.get_at(
+                (int(self.x), int(self.y - self.radius))) == (0, 100, 0, 255):
+                if GAME_TIME.get_ticks() - self.startTime > 100:
+                    return "GREEN TANK COLLISION"
+        except IndexError:
+            pass
