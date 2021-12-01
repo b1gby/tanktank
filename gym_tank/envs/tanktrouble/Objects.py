@@ -156,26 +156,30 @@ class tank:
         collision = False
         while self.collision(surface) == 'leftFrontCollision':
             collision = True
-            self.leftRotate = False
-            self.backwardDirection = True
-            self.move(surface)
+            # self.leftRotate = False
+            # self.backwardDirection = True
+            # self.move(surface)
+            self.move_backward(surface)
             time.sleep(.01)
         else:
             if collision:
                 collision = False
                 self.backwardDirection = False
                 self.leftRotate = True
+                self.rotate_left(surface)
         while self.collision(surface) == 'rightRearCollision':
             collision = True
-            self.leftRotate = False
-            self.forwardDirection = True
-            self.move(surface)
+            # self.leftRotate = False
+            # self.forwardDirection = True
+            # self.move(surface)
+            self.move_forward(surface)
             time.sleep(.01)
         else:
             if collision:
                 collision = False
                 self.forwardDirection = False
                 self.leftRotate = True
+                self.rotate_left(surface)
         if not collision:
             self.angle += self.rotateSpeed
         if self.angle >= 360:
@@ -187,26 +191,30 @@ class tank:
         collision = False
         while self.collision(surface) == 'rightFrontCollision':
             collision = True
-            self.rightRotate = False
-            self.backwardDirection = True
-            self.move(surface)
+            # self.rightRotate = False
+            # self.backwardDirection = True
+            # self.move(surface)
+            self.move_backward(surface)
             time.sleep(.01)
         else:
             if collision:
                 collision = False
                 self.backwardDirection = False
                 self.rightRotate = True
+                self.rotate_right(surface)
         while self.collision(surface) == 'leftRearCollision':
             collision = True
-            self.rightRotate = False
-            self.forwardDirection = True
-            self.move(surface)
+            # self.rightRotate = False
+            # self.forwardDirection = True
+            # self.move(surface)
+            self.move_forward(surface)
             time.sleep(.01)
         else:
             if collision:
                 collision = False
                 self.forwardDirection = False
                 self.rightRotate = True
+                self.rotate_right(surface)
         if not collision:
             self.angle -= self.rotateSpeed
         if self.angle <= -360:
@@ -300,9 +308,10 @@ class tank:
         while self.collision(surface) == 'frontLeftCollision':
             if self.angle != 0 and self.angle != 90 and self.angle != 180 and self.angle != 270 and self.angle != -90 and self.angle != -180 and self.angle != -270:
                 collision = True
-                self.forwardDirection = False
-                self.rightRotate = True
-                self.rotate(surface)
+                # self.forwardDirection = False
+                # self.rightRotate = True
+                # self.rotate(surface)
+                self.rotate_right(surface)
                 time.sleep(.01)
             else:
                 self.forwardDirection = False
@@ -310,13 +319,15 @@ class tank:
             if collision:
                 collision = False
                 self.rightRotate = False
-                self.forwardDirection = True
+                # self.forwardDirection = True
+                self.move_forward(surface)
         while self.collision(surface) == 'frontRightCollision':
             if self.angle != 0 and self.angle != 90 and self.angle != 180 and self.angle != 270 and self.angle != -90 and self.angle != -180 and self.angle != -270:
                 collision = True
-                self.forwardDirection = False
-                self.leftRotate = True
-                self.rotate(surface)
+                # self.forwardDirection = False
+                # self.leftRotate = True
+                # self.rotate(surface)
+                self.rotate_left(surface)
                 time.sleep(.01)
             else:
                 self.forwardDirection = False
@@ -324,7 +335,8 @@ class tank:
             if collision:
                 collision = False
                 self.leftRotate = False
-                self.forwardDirection = True
+                # self.forwardDirection = True
+                self.move_forward(surface)
         if not self.collision(surface):
             self.vx = self.v * math.cos((-self.angle * math.pi) / 180)
             self.vy = self.v * math.sin((-self.angle * math.pi) / 180)
@@ -337,9 +349,10 @@ class tank:
         while self.collision(surface) == 'rearLeftCollision':
             if self.angle != 0 and self.angle != 90 and self.angle != 180 and self.angle != 270 and self.angle != -90 and self.angle != -180 and self.angle != -270:
                 collision = True
-                self.backwardDirection = False
-                self.leftRotate = True
-                self.rotate(surface)
+                # self.backwardDirection = False
+                # self.leftRotate = True
+                # self.rotate(surface)
+                self.rotate_left(surface)
                 time.sleep(.01)
             else:
                 self.backwardDirection = False
@@ -347,13 +360,15 @@ class tank:
             if collision:
                 collision = False
                 self.leftRotate = False
-                self.backwardDirection = True
+                # self.backwardDirection = True
+                self.move_backward(surface)
         while self.collision(surface) == 'rearRightCollision':
             if self.angle != 0 and self.angle != 90 and self.angle != 180 and self.angle != 270 and self.angle != -90 and self.angle != -180 and self.angle != -270:
                 collision = True
-                self.backwardDirection = False
-                self.rightRotate = True
-                self.rotate(surface)
+                # self.backwardDirection = False
+                # self.rightRotate = True
+                # self.rotate(surface)
+                self.rotate_right(surface)
                 time.sleep(.01)
             else:
                 self.backwardDirection = False
@@ -361,7 +376,8 @@ class tank:
             if collision:
                 collision = False
                 self.rightRotate = False
-                self.backwardDirection = True
+                # self.backwardDirection = True
+                self.move_backward(surface)
         if not self.collision(surface):
             self.vx = self.v * math.cos((-self.angle * math.pi) / 180)
             self.vy = self.v * math.sin((-self.angle * math.pi) / 180)

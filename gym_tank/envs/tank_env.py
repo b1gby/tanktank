@@ -151,6 +151,35 @@ class TankEnv(gym.Env):
         self.greenTank.drawTank(self.screen)
         self.purpleTank.drawTank(self.screen)
 
+        # bullets
+        for bullet in self.purpleTank.bullets:
+            collisionKind = bullet.collision(self.screen)
+
+            if collisionKind == "GREEN TANK COLLISION":
+                self.greenTank.isWracked = True
+                self.greenTank.wrackTime = GAME_TIME.get_ticks()
+                bullet.isExpired = True
+                self.purpleTank.bullets.remove(bullet)
+            elif collisionKind == "PURPLE TANK COLLISION":
+                self.purpleTank.isWracked = True
+                self.purpleTank.wrackTime = GAME_TIME.get_ticks()
+                bullet.isExpired = True
+                self.purpleTank.bullets.remove(bullet)
+            bullet.draw(self.screen)
+        for bullet in self.greenTank.bullets:
+            collisionKind = bullet.collision(self.screen)
+            if collisionKind == "GREEN TANK COLLISION":
+                self.greenTank.isWracked = True
+                self.greenTank.wrackTime = GAME_TIME.get_ticks()
+                bullet.isExpired = True
+                self.greenTank.bullets.remove(bullet)
+            elif collisionKind == "PURPLE TANK COLLISION":
+                self.purpleTank.isWracked = True
+                self.purpleTank.wrackTime = GAME_TIME.get_ticks()
+                bullet.isExpired = True
+                self.greenTank.bullets.remove(bullet)
+            bullet.draw(self.screen)
+
         pygame.display.update()
 
         info = {}
