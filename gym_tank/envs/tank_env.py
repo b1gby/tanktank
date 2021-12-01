@@ -172,7 +172,7 @@ class TankEnv(gym.Env):
             done = False
             reward = -1.0
 
-        info.green_bullets = self.greenTank.bullets
+        info["green_bullets"] = self.greenTank.bullets
 
         return observation, reward, done, info
 
