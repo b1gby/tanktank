@@ -150,7 +150,7 @@ class TankEnv(gym.Env):
 
         self.greenTank.drawTank(self.screen)
         self.purpleTank.drawTank(self.screen)
-
+        print(self.greenTank.collision(self.screen))
         # bullets
         for bullet in self.purpleTank.bullets:
             collisionKind = bullet.collision(self.screen)

@@ -570,7 +570,7 @@ class bullet:
         self.y = tank.y + tank.width * math.sin((-tank.angle * math.pi) / 180) / 2
         self.angle = tank.angle
         self.radius = 3
-        self.v = 4.5
+        self.v = 10
         self.vx = self.v * math.cos((self.angle * math.pi) / 180)
         self.vy = self.v * math.sin((self.angle * math.pi) / 180)
         tank.bullets.append(self)
