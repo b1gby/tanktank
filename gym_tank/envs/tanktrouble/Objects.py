@@ -568,7 +568,7 @@ class bullet:
         tank.bullets.append(self)
         self.isExpired = False
         self.startTime = GAME_TIME.get_ticks()
-        self.expireTime = 10000
+        self.expireTime = 20000
 
     def draw(self, surface):
         if not self.isExpired:
