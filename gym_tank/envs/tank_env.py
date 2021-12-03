@@ -27,7 +27,7 @@ class TankEnv(gym.Env):
         self.play_on = True
         # self.screen_width = 432
         # self.screen_height = 288
-        self.screen_width = 700
+        self.screen_width = 600
         self.screen_height = 400
         self.screen = pygame.display.set_mode(
             (self.screen_width, self.screen_height))
@@ -35,7 +35,7 @@ class TankEnv(gym.Env):
         self.world = Objects.world()
 
         # two tank in Objects
-        self.positions = [(125, 75), (600,300)]
+        self.positions = [(75, 75), (550,300)]
         self.greenTankPosition = self.positions.pop(random.randrange(len(self.positions)))
         self.purpleTankPosition = self.positions.pop(random.randrange(len(self.positions)))
 
@@ -67,7 +67,7 @@ class TankEnv(gym.Env):
 
         self.world.drawMap(self.screen)
         if self.greenTank.isWracked or self.purpleTank.isWracked:
-            positions = [(93, 50), (1273, 670), (93, 450), (1273, 270), (493, 450), (973, 160), (343, 200), (973, 500)]
+            positions = [(75, 75), (550,300)]
             greenTankPosition = positions.pop(random.randrange(len(positions)))
             purpleTankPosition = positions.pop(random.randrange(len(positions)))
             self.greenTank.restart(greenTankPosition[0], greenTankPosition[1])

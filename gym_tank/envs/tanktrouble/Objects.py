@@ -138,7 +138,7 @@ class world:
 
     def drawMap(self, surface):
         self.chooseMap()
-        surface.blit(self.Map, (43, 0))
+        surface.blit(self.Map, (0, 0))
 
     def __init__(self):
         self.maps = []
@@ -535,10 +535,10 @@ class tank:
         self.rouPicture = None
         self.pictureAngle = 0
         self.loadPicture(Imagedirectory)
-        self.height = 50
-        self.width = 75
-        self.pictureHeight = 50
-        self.pictureWidth = 75
+        self.height = 30
+        self.width = 50
+        self.pictureHeight = 30
+        self.pictureWidth = 50
         self.angle = random.randrange(360)
         self.rotateSpeed = 2
         self.v = 3
@@ -562,13 +562,13 @@ class bullet:
         self.y = tank.y + tank.width * math.sin((-tank.angle * math.pi) / 180) / 2
         self.angle = tank.angle
         self.radius = 3
-        self.v = 10
+        self.v = 0.2
         self.vx = self.v * math.cos((self.angle * math.pi) / 180)
         self.vy = self.v * math.sin((self.angle * math.pi) / 180)
         tank.bullets.append(self)
         self.isExpired = False
         self.startTime = GAME_TIME.get_ticks()
-        self.expireTime = 20000
+        self.expireTime = 10000
 
     def draw(self, surface):
         if not self.isExpired:
@@ -596,16 +596,16 @@ class bullet:
             elif surface.get_at((int(self.x), int(self.y - self.radius))) == (101, 101, 101, 255):
                 self.angle = - self.angle
                 return "WALL COLLISION"
-            if surface.get_at((int(self.x + self.radius), int(self.y))) == (100, 0, 100, 255) or surface.get_at(
-                    (int(self.x - self.radius), int(self.y))) == (100, 0, 100, 255) or surface.get_at(
-                (int(self.x), int(self.y + self.radius))) == (100, 0, 100, 255) or surface.get_at(
-                (int(self.x), int(self.y - self.radius))) == (100, 0, 100, 255):
+            if surface.get_at((int(self.x + self.radius), int(self.y))) == (255, 158, 116, 255) or surface.get_at(
+                    (int(self.x - self.radius), int(self.y))) == (255, 158, 116, 255) or surface.get_at(
+                (int(self.x), int(self.y + self.radius))) == (255, 158, 116, 255) or surface.get_at(
+                (int(self.x), int(self.y - self.radius))) == (255, 158, 116, 255):
                 if GAME_TIME.get_ticks() - self.startTime > 100:
                     return "PURPLE TANK COLLISION"
-            if surface.get_at((int(self.x + self.radius), int(self.y))) == (0, 100, 0, 255) or surface.get_at(
-                    (int(self.x - self.radius), int(self.y))) == (0, 100, 0, 255) or surface.get_at(
-                (int(self.x), int(self.y + self.radius))) == (0, 100, 0, 255) or surface.get_at(
-                (int(self.x), int(self.y - self.radius))) == (0, 100, 0, 255):
+            if surface.get_at((int(self.x + self.radius), int(self.y))) == (151, 158, 116, 255) or surface.get_at(
+                    (int(self.x - self.radius), int(self.y))) == (151, 158, 116, 255) or surface.get_at(
+                (int(self.x), int(self.y + self.radius))) == (151, 158, 116, 255) or surface.get_at(
+                (int(self.x), int(self.y - self.radius))) == (151, 158, 116, 255):
                 if GAME_TIME.get_ticks() - self.startTime > 100:
                     return "GREEN TANK COLLISION"
         except IndexError:
