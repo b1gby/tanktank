@@ -27,21 +27,21 @@ class TankEnv(gym.Env):
         self.play_on = True
         # self.screen_width = 432
         # self.screen_height = 288
-        self.screen_width = 1920
-        self.screen_height = 1080
+        self.screen_width = 700
+        self.screen_height = 400
         self.screen = pygame.display.set_mode(
             (self.screen_width, self.screen_height))
 
         self.world = Objects.world()
 
         # two tank in Objects
-        self.positions = [(93, 50), (1273, 670), (93, 450), (1273, 270), (493, 450), (973, 160), (343, 200), (973, 500)]
+        self.positions = [(125, 75), (600,300)]
         self.greenTankPosition = self.positions.pop(random.randrange(len(self.positions)))
         self.purpleTankPosition = self.positions.pop(random.randrange(len(self.positions)))
 
-        self.greenTank = Objects.tank(self.greenTankPosition[0], self.greenTankPosition[1], 'Tanks/greenTank3.png',
+        self.greenTank = Objects.tank(self.greenTankPosition[0], self.greenTankPosition[1], 'Tanks/greenTank4.png',
                                       self.screen)
-        self.purpleTank = Objects.tank(self.purpleTankPosition[0], self.purpleTankPosition[1], 'Tanks/purpleTank.png',
+        self.purpleTank = Objects.tank(self.purpleTankPosition[0], self.purpleTankPosition[1], 'Tanks/candyTank4.png',
                                        self.screen)
 
         # state

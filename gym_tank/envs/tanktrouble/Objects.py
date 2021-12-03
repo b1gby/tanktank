@@ -131,7 +131,7 @@ def checkPixelsRotate(surface, start, angle, rotateSpeed, direction):
 
 class world:
     def loadMaps(self):
-        self.maps.append(pygame.image.load(os.path.join(mypath, 'Maps/Map3.png')))
+        self.maps.append(pygame.image.load(os.path.join(mypath, 'Maps/Map4.png')))
 
     def chooseMap(self):
         self.Map = self.maps[random.randrange(len(self.maps))]
