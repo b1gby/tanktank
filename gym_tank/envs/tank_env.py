@@ -53,7 +53,7 @@ class TankEnv(gym.Env):
         # 2 : backward
         # 3 : rotate_left
         # 4 : rotate_right
-        self.discrete_actions = [0, 1, 2, 3, 4]
+        self.discrete_actions = [0, 1, 2, 3, 4, 5]
         self.action_space = Discrete(len(self.discrete_actions))
         self.action = np.random.choice(self.discrete_actions)
         self.observation_space = Box(low=0, high=255, shape=(
@@ -147,6 +147,8 @@ class TankEnv(gym.Env):
         elif action == 4:
             # rotate right
             self.greenTank.rotate_right(self.screen)
+        elif action == 5:
+            pass
 
         self.greenTank.drawTank(self.screen)
         self.purpleTank.drawTank(self.screen)
