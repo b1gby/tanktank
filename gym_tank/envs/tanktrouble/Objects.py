@@ -540,7 +540,7 @@ class tank:
         self.pictureHeight = 30
         self.pictureWidth = 50
         self.angle = random.randrange(360)
-        self.rotateSpeed = 2
+        self.rotateSpeed = 10
         self.v = 3
         self.vx = self.v * math.cos((-self.angle * math.pi) / 180)
         self.vy = self.v * math.sin((-self.angle * math.pi) / 180)
