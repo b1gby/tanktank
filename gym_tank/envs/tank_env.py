@@ -188,17 +188,17 @@ class TankEnv(gym.Env):
         # 胜利奖励大
         if self.purpleTank.isWracked:
             done = True
-            reward = 1000.0
+            reward = 100
             self.reset()
         # 自己摧毁惩罚要大
         elif self.greenTank.isWracked:
             done = True
-            reward = -100.0
+            reward = -100
             self.reset()
         # 正常状态 惩罚要小
         else:
             done = False
-            reward = -1.0
+            reward = 0
 
         info["green_bullets"] = self.greenTank.bullets
 

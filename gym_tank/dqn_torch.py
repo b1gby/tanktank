@@ -350,7 +350,7 @@ def optimize_model():
     optimizer.step()
 
 num_episodes = 50
-durations_sum = 0
+# durations_sum = 0
 for i_episode in range(num_episodes):
     # Initialize the environment and state
     env.reset()
@@ -384,7 +384,7 @@ for i_episode in range(num_episodes):
             plot_durations()
             break
     # Update the target network, copying all weights and biases in DQN
-    durations_sum += torch.tensor(episode_durations, dtype=torch.float)
+    # durations_sum += torch.tensor(episode_durations, dtype=torch.float).numpy()
     if i_episode % TARGET_UPDATE == 0:
         target_net.load_state_dict(policy_net.state_dict())
         torch.save(target_net.state_dict(), model_dir + "target_net.pth")
