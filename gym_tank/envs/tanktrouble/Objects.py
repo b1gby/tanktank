@@ -561,14 +561,14 @@ class bullet:
         self.x = tank.x + tank.width * math.cos((tank.angle * math.pi) / 180) / 2
         self.y = tank.y + tank.width * math.sin((-tank.angle * math.pi) / 180) / 2
         self.angle = tank.angle
-        self.radius = 3
-        self.v = 0.2
+        self.radius = 8
+        self.v = 8
         self.vx = self.v * math.cos((self.angle * math.pi) / 180)
         self.vy = self.v * math.sin((self.angle * math.pi) / 180)
         tank.bullets.append(self)
         self.isExpired = False
         self.startTime = GAME_TIME.get_ticks()
-        self.expireTime = 10000
+        self.expireTime = 20000
 
     def draw(self, surface):
         if not self.isExpired:

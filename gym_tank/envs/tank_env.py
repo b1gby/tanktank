@@ -35,7 +35,7 @@ class TankEnv(gym.Env):
         self.world = Objects.world()
 
         # two tank in Objects
-        self.positions = [(75, 75), (550,300)]
+        self.positions = [(100, 100), (500,300)]
         self.greenTankPosition = self.positions.pop(random.randrange(len(self.positions)))
         self.purpleTankPosition = self.positions.pop(random.randrange(len(self.positions)))
 
@@ -67,7 +67,7 @@ class TankEnv(gym.Env):
 
         self.world.drawMap(self.screen)
         if self.greenTank.isWracked or self.purpleTank.isWracked:
-            positions = [(75, 75), (550,300)]
+            positions = [(100, 100), (500,300)]
             greenTankPosition = positions.pop(random.randrange(len(positions)))
             purpleTankPosition = positions.pop(random.randrange(len(positions)))
             self.greenTank.restart(greenTankPosition[0], greenTankPosition[1])
@@ -188,12 +188,12 @@ class TankEnv(gym.Env):
         # 胜利奖励大
         if self.purpleTank.isWracked:
             done = True
-            reward = 50.0
+            reward = 1000.0
             self.reset()
         # 自己摧毁惩罚要大
         elif self.greenTank.isWracked:
             done = True
-            reward = -1.0
+            reward = -100.0
             self.reset()
         # 正常状态 惩罚要小
         else:
