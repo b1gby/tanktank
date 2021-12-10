@@ -541,7 +541,7 @@ class tank:
         self.pictureWidth = 50
         self.angle = random.randrange(360)
         self.rotateSpeed = 10
-        self.v = 8
+        self.v = 5
         self.vx = self.v * math.cos((-self.angle * math.pi) / 180)
         self.vy = self.v * math.sin((-self.angle * math.pi) / 180)
         self.forwardDirection = False
@@ -587,13 +587,13 @@ class bullet:
 
     def collision(self, surface):
         try:
-            if surface.get_at((int(self.x + self.radius), int(self.y))) == (101, 101, 101, 255):
+            if surface.get_at((int(self.x + self.radius + self.v), int(self.y))) == (101, 101, 101, 255):
                 self.angle = 180 - self.angle
-            elif surface.get_at((int(self.x - self.radius), int(self.y))) == (101, 101, 101, 255):
+            elif surface.get_at((int(self.x - self.radius - self.v), int(self.y))) == (101, 101, 101, 255):
                 self.angle = 180 - self.angle
-            elif surface.get_at((int(self.x), int(self.y + self.radius))) == (101, 101, 101, 255):
+            elif surface.get_at((int(self.x), int(self.y + self.radius + self.v))) == (101, 101, 101, 255):
                 self.angle = - self.angle
-            elif surface.get_at((int(self.x), int(self.y - self.radius))) == (101, 101, 101, 255):
+            elif surface.get_at((int(self.x), int(self.y - self.radius - self.v))) == (101, 101, 101, 255):
                 self.angle = - self.angle
                 return "WALL COLLISION"
             if surface.get_at((int(self.x + self.radius), int(self.y))) == (255, 158, 116, 255) or surface.get_at(
