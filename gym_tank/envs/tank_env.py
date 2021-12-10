@@ -34,15 +34,9 @@ class TankEnv(gym.Env):
 
         self.world = Objects.world()
 
-        # two tank in Objects
-        self.positions = [(100, 100), (500,300)]
-        self.greenTankPosition = self.positions.pop(random.randrange(len(self.positions)))
-        self.purpleTankPosition = self.positions.pop(random.randrange(len(self.positions)))
-
-        self.greenTank = Objects.tank(self.greenTankPosition[0], self.greenTankPosition[1], 'Tanks/greenTank4.png',
-                                      self.screen)
-        self.purpleTank = Objects.tank(self.purpleTankPosition[0], self.purpleTankPosition[1], 'Tanks/candyTank4.png',
-                                       self.screen)
+        self.greenTank = None
+        self.purpleTank = None
+        self.generate_tanks()
 
         # state
         self.initial_obs = self.get_state()
@@ -67,11 +61,7 @@ class TankEnv(gym.Env):
 
         self.world.drawMap(self.screen)
         if self.greenTank.isWracked or self.purpleTank.isWracked:
-            positions = [(100, 100), (500,300)]
-            greenTankPosition = positions.pop(random.randrange(len(positions)))
-            purpleTankPosition = positions.pop(random.randrange(len(positions)))
-            self.greenTank.restart(greenTankPosition[0], greenTankPosition[1])
-            self.purpleTank.restart(purpleTankPosition[0], purpleTankPosition[1])
+            self.generate_tanks(is_restart= True)
             self.greenTank.rotate(self.screen)
             self.purpleTank.rotate(self.screen)
 
@@ -109,6 +99,26 @@ class TankEnv(gym.Env):
             bullet.draw(self.screen)
 
         pygame.display.update()
+
+    def generate_tanks(self, is_restart=False):
+        r = random.random()
+        # 绿在左
+        if r < 0.5:
+            greenTankPosition = [random.randint(75, 225), random.randint(75, 325)]
+            purpleTankPosition = [random.randint(375, 525), random.randint(75, 325)]
+        # 紫在右
+        else:
+            greenTankPosition = [random.randint(375, 525), random.randint(75, 325)]
+            purpleTankPosition = [random.randint(75, 225), random.randint(75, 325)]
+
+        if is_restart:
+            self.greenTank.restart(greenTankPosition[0], greenTankPosition[1])
+            self.purpleTank.restart(purpleTankPosition[0], purpleTankPosition[1])
+        else:
+            self.greenTank = Objects.tank(greenTankPosition[0], greenTankPosition[1], 'Tanks/greenTank4.png',
+                                          self.screen)
+            self.purpleTank = Objects.tank(purpleTankPosition[0], purpleTankPosition[1], 'Tanks/candyTank4.png',
+                                           self.screen)
 
     def state(self):
         canvas = np.zeros((self.screen_width, self.screen_height, 3))

@@ -306,8 +306,7 @@ def plot_durations():
 def optimize_model():
     if len(memory) < BATCH_SIZE:
         return
-    # transitions = memory.sample(BATCH_SIZE)
-    transitions = memory[len(memory)-20:]
+    transitions = memory.sample(BATCH_SIZE)
     # Transpose the batch (see https://stackoverflow.com/a/19343/3343043 for
     # detailed explanation). This converts batch-array of Transitions
     # to Transition of batch-arrays.
