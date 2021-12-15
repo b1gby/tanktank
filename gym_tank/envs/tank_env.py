@@ -212,6 +212,9 @@ class TankEnv(gym.Env):
             done = False
             reward = 0
 
+        if self.greenTank.x > 600 or self.greenTank.x < 0 or self.greenTank.y > 400 or self.greenTank.y < 0:
+            self.reset()
+
         info["green_bullets"] = self.greenTank.bullets
 
         return observation, reward, done, info
