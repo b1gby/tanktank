@@ -104,12 +104,12 @@ class TankEnv(gym.Env):
         r = random.random()
         # 绿在左
         if r < 0.5:
-            greenTankPosition = [random.randint(75, 225), random.randint(75, 325)]
-            purpleTankPosition = [random.randint(375, 525), random.randint(75, 325)]
+            greenTankPosition = [random.randint(75, 175), random.randint(75, 325)]
+            purpleTankPosition = [random.randint(425, 525), random.randint(75, 325)]
         # 紫在右
         else:
-            greenTankPosition = [random.randint(375, 525), random.randint(75, 325)]
-            purpleTankPosition = [random.randint(75, 225), random.randint(75, 325)]
+            greenTankPosition = [random.randint(425, 525), random.randint(75, 325)]
+            purpleTankPosition = [random.randint(75, 175), random.randint(75, 325)]
 
         if is_restart:
             self.greenTank.restart(greenTankPosition[0], greenTankPosition[1])
